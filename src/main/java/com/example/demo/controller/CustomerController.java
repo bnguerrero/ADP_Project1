@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,29 +14,26 @@ import com.example.demo.domain.Customer;
 import com.example.demo.repository.CustomerRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/customers")
 public class CustomerController{
 	
-	@Autowired
-	CustomerRepository repo;
-	
-	private Customer customer1 = new Customer(1L, "bri", "bri.example.com");
-	private Customer customer2 = new Customer(2L, "Chris", "chris@example.com");
+	private List<Customer> customers = Arrays.asList(
+			new Customer(1L, "bri", "bri.example.com"), new Customer(2L, "Chris", "chris@example.com"));
 		
 	@GetMapping("/customer/{id}")
-	public Optional<Customer> getCustomerById(@PathVariable Long id) {
-		return repo.findById(id);
-	}
-	
-	@GetMapping("/customers")
-	public ResponseEntity<List<Customer>> getAllCustomers(){
-		
+	public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+		for(Customer customer : customers) {
+			if(customer.getId().equals(id)) {
+				return ResponseEntity.ok(customer);
+			}
+		}
+		return null;
 	}
 	
 	@GetMapping
-	public 
-	
-	
+	public List<Customer>getAllCustomers(){
+		return customers;
+	}
 }
 
 

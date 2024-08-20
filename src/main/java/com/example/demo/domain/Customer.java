@@ -1,22 +1,13 @@
 package com.example.demo.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "CUSTOMERS")
 public class Customer{
-	@Id
-	@GeneratedValue
-	private Long id;
-	
-	private String name;
-	private String email;
+
+	 Long id;
+	 String name;
+	 String email;
 		
 	public Customer(Long id, String name, String email) {
-			
 	}
 		
 	public Long getId() {
