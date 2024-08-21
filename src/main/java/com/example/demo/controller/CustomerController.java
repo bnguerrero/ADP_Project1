@@ -1,8 +1,6 @@
 package com.example.demo.controller;
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,21 +12,25 @@ import com.example.demo.domain.Customer;
 @RequestMapping("/api")
 public class CustomerController{
 	
-	private List<Customer> customers = Arrays.asList(
-			new Customer(1L, "bri", "bri.example.com"), new Customer(2L, "Chris", "chris@example.com"));
+	ArrayList<Customer> customers = new ArrayList<Customer>();
+	
+	public CustomerController() {
+		customers.add(new Customer(1L, "bri", "myPassword", "bri.example.com"));
+		customers.add(new Customer(2L, "Chris", "hisPassword", "chris@example.com"));
+	}
 		
 	@GetMapping("/customer/{id}")
-	public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) {
+	public Customer getCustomerById(@PathVariable Long id) {
 		for(Customer customer : customers) {
 			if(customer.getId().equals(id)) {
-				return ResponseEntity.ok(customer);
+				return customer;
 			}
 		}
 		return null;
 	}
 	
 	@GetMapping("/customers")
-	public List<Customer>getAllCustomers(){
+	public ArrayList<Customer>getAllCustomers(){
 		return customers;
 	}
 }
