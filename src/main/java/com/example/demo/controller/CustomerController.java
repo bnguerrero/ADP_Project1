@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,10 +55,25 @@ public class CustomerController{
 		return ResponseEntity.created(location).build();
 	}
 	
+	// update or create a customer by ID / no content
+	@PutMapping("/customer/{id}")
+	public ResponseEntity<?> createOrUpdateCustomer(@PathVariable Long id,
+			@RequestBody Customer customerDetails){
+		if(!repo.existsById(id) || customerDetails.getName() == null ||
+				customerDetails.getEmail() == null || customerDetails.getPassword() == null) {
+			return ResponseEntity
+					.badRequest()
+					.build();
+		}
+		customerDetails = repo.save(customerDetails);
+		return ResponseEntity.ok().build();
+	}
+	
+	
 	// delete a customer by id
 	@DeleteMapping("/customer/{id}")
 	public ResponseEntity<?> deleteCustomerById(@PathVariable Long id){
-		if(repo.existsById(id)) {
+		if(repo.existsById(id) ) {
 			repo.deleteById(id);
 			return ResponseEntity.noContent().build();
 		}
@@ -66,11 +82,6 @@ public class CustomerController{
 		}
 		
 	}
-	
-	// update a customer by ID
-	
-	// update a customer by name
-	
 	
 	// delete all customers
 	@DeleteMapping("/customers")
