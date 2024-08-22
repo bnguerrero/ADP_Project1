@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +54,12 @@ public class CustomerController{
 		return ResponseEntity.created(location).build();
 	}
 	
-	// update or create a customer by ID / no content
+	// update or create a customer by email / no content
 	@PutMapping("/customer/{id}")
 	public ResponseEntity<?> createOrUpdateCustomer(@PathVariable Long id,
 			@RequestBody Customer customerDetails){
-		if(!repo.existsById(id) || customerDetails.getName() == null ||
+		// checks to see if the customer has all the required details
+		if(customerDetails.getName() == null ||
 				customerDetails.getEmail() == null || customerDetails.getPassword() == null) {
 			return ResponseEntity
 					.badRequest()
@@ -67,6 +67,16 @@ public class CustomerController{
 		}
 		customerDetails = repo.save(customerDetails);
 		return ResponseEntity.ok().build();
+		
+		//checks to see if the customer exists by its ID
+		// if they don't exist, they will be created.
+		///if(!repo.existsById(id))
+		//{
+		//	customerDetails = repo.save(customerDetails);
+		//	return ResponseEntity.ok().build();
+		//}
+		//return null;
+		
 	}
 	
 	
