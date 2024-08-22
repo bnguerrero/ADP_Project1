@@ -16,5 +16,5 @@ CREATE TABLE "CUSTOMERS" (
 -- ----------------------------------------------
 
 -- primary/unique
-ALTER TABLE "CUSTOMERS" 
+ALTER TABLE "CUSTOMERS"
 ADD CONSTRAINT "SQL120325130144011" PRIMARY KEY ("ID");

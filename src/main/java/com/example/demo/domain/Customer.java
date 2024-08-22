@@ -19,11 +19,11 @@ public class Customer{
 	
 	String email;
 	String password;
+	
+	public Customer() {
 		
-	public Customer(Long id, String name, String email) {
-			
 	}
-		
+	
 	public Long getId() {
 			return id;
 		}

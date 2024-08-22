@@ -18,7 +18,7 @@ import com.example.demo.domain.Customer;
 import com.example.demo.repository.CustomerRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class CustomerController{
 	
 	@Autowired
