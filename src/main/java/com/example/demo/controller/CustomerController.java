@@ -54,29 +54,19 @@ public class CustomerController{
 		return ResponseEntity.created(location).build();
 	}
 	
-	// update or create a customer by email 
+	// update or create a customer by id 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateCustomerDetails(
 	        @RequestBody Customer customerDetails,
 	        @PathVariable long id)
 	{
-	    // check to see if name section is filled out correctly
-	    if (customerDetails.getName().isBlank()) {
-	        return ResponseEntity.badRequest().body("please input a valid name");
-	    }
-	    // check to see if email section is filled out correctly
-	    if (customerDetails.getEmail().isBlank()) {
-	        return ResponseEntity.badRequest().body("invalid email");
-	    }
-	    // check if ID matches
-	    if (customerDetails.getId() != id) {
-	        return ResponseEntity.badRequest().body("Customer ID in the path does not match");
-	    }
-	    //updated or create customer details
-	    customerDetails = repo.save(customerDetails);
-	    return ResponseEntity.ok().build();
+		if(customerDetails.getId() != id || customerDetails.getEmail()==null || customerDetails.getName() == null){
+			return ResponseEntity.badRequest().build();
+		}
+		customerDetails = repo.save(customerDetails);
+		return ResponseEntity.ok().build();
+	
 	}
-
 	
 	
 	// delete a customer by id
